@@ -1,7 +1,5 @@
 FROM ubuntu:20.04
 
-MAINTANER Alex Dias "alex.dias@asrd.com.br"
-
 RUN apt update -y && \
     apt install -y python3-pip \
     apt install -y python3-dev
