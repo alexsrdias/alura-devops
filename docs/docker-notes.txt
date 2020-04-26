@@ -1,0 +1,5 @@
+# Create image
+docker build -t myapp:latest .
+
+# Run container
+docker run --name myapp -p 5000:5000 -d myapp
