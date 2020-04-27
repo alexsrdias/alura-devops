@@ -6,3 +6,19 @@ docker run --name my-app -p 5000:5000 -d my-app
 
 # Run Sonarqube
 docker run --name my-sonar -p 9000:9000 -d sonarqube:lts
+
+
+# Instrução para analise de qualidade de Dados
+#!/bin/bash
+# Baixando o Sonarqube
+wget https://s3.amazonaws.com/caelum-online-public/1110-jenkins/05/sonar-scanner-cli-3.3.0.1492-linux.zip
+
+# Descompactando o scanner
+unzip sonar-scanner-cli-3.3.0.1492-linux.zip
+
+# Rodando o Scanner
+./sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -X \
+ -Dsonar.projectKey=my-app \
+ -Dsonar.sources=. \
+ -Dsonar.host.url=http://192.168.100.22:9000 \
+ -Dsonar.login=aa381d56b3fe1919f6e9dd48d4372b2740585265
