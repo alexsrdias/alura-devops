@@ -10,21 +10,24 @@ class Jogos:
     self.categoria = categoria 
     self.console = console
 
-class User:
-  def __init__(self, id, name, password):
-    self.id = id 
-    self.name = name 
-    self.password = password
+class Usuario:
+  def __init__(self, id, nome, senha):
+    self.id = id
+    self.nome = nome
+    self.senha = senha
 
 jogo1 = Jogos('Super Mario', 'Acao', 'SNES')
 jogo2 = Jogos('Dinossauro Cadilac', 'Aventura', 'ARCADE')
 jogo3 = Jogos('Uncharted 4', 'Aventura', 'PS4')
 lista = [jogo1, jogo2, jogo3]
 
-user1 = User('asrd', 'Alex Dias', '123')
-user2 = User('msrd', 'Marcelo Dias', '231')
-user3 = User('vsrd', 'Vivian Dias', '312')
+usuario1 = Usuario('asrd', 'Alex Dias', '123')
+usuario2 = Usuario('vsrd', 'Vivian Dias', '123')
+usuario3 = Usuario('msrd', 'Marcelo Dias', '123')
 
+usuarios = { usuario1.id: usuario1, 
+             usuario2.id: usuario2, 
+             usuario3.id: usuario3 }
 
 # Rotas de Paginas
 
@@ -84,19 +87,18 @@ def criar():
 @app.route('/auth', methods=['POST'])
 def auth():
 
-  if '123' == request.form['senha']:
-
-    session ['usuario_logado'] = request.form['usuario']
-    flash(request.form['usuario'] + ' logou com sucesso!')
-    page = request.form['page']
-
-    return redirect(page)
-
-  else :
-
-    flash('Não logado, tente de novo!')
-
-    return redirect (url_for('login'))
+    if request.form['usuario'] in usuarios:
+        usuario = usuarios[request.form['usuario']]
+        if usuario.senha == request.form['senha']:
+          session['usuario_logado'] = usuario.id
+          flash(usuario.nome + ' logou com sucesso!')
+          return redirect(request.form['page'])
+        else:
+          flash('Não logado, tente de novo!')
+          return redirect(url_for('login'))
+    else:
+        flash('Não logado, tente de novo!')
+        return redirect(url_for('login'))
 
 # Verificar se esta logado
 def check_login():
