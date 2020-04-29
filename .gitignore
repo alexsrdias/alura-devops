@@ -1,2 +1,5 @@
 .venv/
 .ssh/
+.vscode/
+up.sh
+*.pyc
